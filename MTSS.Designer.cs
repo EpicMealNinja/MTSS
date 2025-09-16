@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MTSS));
             this.txtBxFirstName = new System.Windows.Forms.TextBox();
             this.lblFirstName = new System.Windows.Forms.Label();
             this.lblLastName = new System.Windows.Forms.Label();
             this.txtBxLastName = new System.Windows.Forms.TextBox();
-            this.rtbNotes = new System.Windows.Forms.RichTextBox();
             this.lblNotes = new System.Windows.Forms.Label();
             this.lblGrade = new System.Windows.Forms.Label();
             this.cbGrade = new System.Windows.Forms.ComboBox();
@@ -42,6 +42,14 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsbSave = new System.Windows.Forms.ToolStripButton();
             this.tsbOpen = new System.Windows.Forms.ToolStripButton();
+            this.tmrNoName = new System.Windows.Forms.Timer(this.components);
+            this.lblNoName = new System.Windows.Forms.Label();
+            this.checkBoxMath = new System.Windows.Forms.CheckedListBox();
+            this.checkBoxReading = new System.Windows.Forms.CheckedListBox();
+            this.txtBxNotes = new System.Windows.Forms.TextBox();
+            this.btnScores = new System.Windows.Forms.Button();
+            this.calSchedule = new System.Windows.Forms.MonthCalendar();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -78,16 +86,6 @@
             this.txtBxLastName.Size = new System.Drawing.Size(100, 20);
             this.txtBxLastName.TabIndex = 3;
             this.txtBxLastName.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            // 
-            // rtbNotes
-            // 
-            this.rtbNotes.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rtbNotes.Location = new System.Drawing.Point(299, 53);
-            this.rtbNotes.Name = "rtbNotes";
-            this.rtbNotes.Size = new System.Drawing.Size(285, 126);
-            this.rtbNotes.TabIndex = 4;
-            this.rtbNotes.Text = "";
-            this.rtbNotes.TextChanged += new System.EventHandler(this.rtbNotes_TextChanged);
             // 
             // lblNotes
             // 
@@ -126,7 +124,7 @@
             // chkBxMath
             // 
             this.chkBxMath.AutoSize = true;
-            this.chkBxMath.Location = new System.Drawing.Point(15, 212);
+            this.chkBxMath.Location = new System.Drawing.Point(12, 179);
             this.chkBxMath.Name = "chkBxMath";
             this.chkBxMath.Size = new System.Drawing.Size(50, 17);
             this.chkBxMath.TabIndex = 8;
@@ -137,7 +135,7 @@
             // chkBxReading
             // 
             this.chkBxReading.AutoSize = true;
-            this.chkBxReading.Location = new System.Drawing.Point(120, 212);
+            this.chkBxReading.Location = new System.Drawing.Point(12, 272);
             this.chkBxReading.Name = "chkBxReading";
             this.chkBxReading.Size = new System.Drawing.Size(66, 17);
             this.chkBxReading.TabIndex = 9;
@@ -147,12 +145,13 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlLight;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbSave,
             this.tsbOpen});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(784, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(609, 25);
             this.toolStrip1.TabIndex = 10;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -174,25 +173,107 @@
             this.tsbOpen.Name = "tsbOpen";
             this.tsbOpen.Size = new System.Drawing.Size(23, 22);
             this.tsbOpen.Text = "Open";
+            this.tsbOpen.Click += new System.EventHandler(this.tsbOpen_Click);
+            // 
+            // tmrNoName
+            // 
+            this.tmrNoName.Interval = 3000;
+            this.tmrNoName.Tick += new System.EventHandler(this.tmrNoName_Tick);
+            // 
+            // lblNoName
+            // 
+            this.lblNoName.AutoSize = true;
+            this.lblNoName.ForeColor = System.Drawing.Color.Red;
+            this.lblNoName.Location = new System.Drawing.Point(9, 21);
+            this.lblNoName.Name = "lblNoName";
+            this.lblNoName.Size = new System.Drawing.Size(224, 13);
+            this.lblNoName.TabIndex = 11;
+            this.lblNoName.Text = "Please add a first and last name before saving";
+            this.lblNoName.Visible = false;
+            // 
+            // checkBoxMath
+            // 
+            this.checkBoxMath.CheckOnClick = true;
+            this.checkBoxMath.Enabled = false;
+            this.checkBoxMath.FormattingEnabled = true;
+            this.checkBoxMath.Items.AddRange(new object[] {
+            "Number Sense",
+            "Fact Fluency",
+            "Problem Solving",
+            "Mathematical Language"});
+            this.checkBoxMath.Location = new System.Drawing.Point(12, 202);
+            this.checkBoxMath.Name = "checkBoxMath";
+            this.checkBoxMath.Size = new System.Drawing.Size(139, 64);
+            this.checkBoxMath.TabIndex = 12;
+            this.checkBoxMath.SelectedIndexChanged += new System.EventHandler(this.checkBoxMath_SelectedIndexChanged);
+            // 
+            // checkBoxReading
+            // 
+            this.checkBoxReading.CheckOnClick = true;
+            this.checkBoxReading.Enabled = false;
+            this.checkBoxReading.FormattingEnabled = true;
+            this.checkBoxReading.Items.AddRange(new object[] {
+            "Phonics",
+            "Fluency",
+            "Comprehension",
+            "Vocab",
+            "Phonic Awareness"});
+            this.checkBoxReading.Location = new System.Drawing.Point(12, 296);
+            this.checkBoxReading.Name = "checkBoxReading";
+            this.checkBoxReading.Size = new System.Drawing.Size(139, 79);
+            this.checkBoxReading.TabIndex = 13;
+            this.checkBoxReading.SelectedIndexChanged += new System.EventHandler(this.checkBoxReading_SelectedIndexChanged);
+            // 
+            // txtBxNotes
+            // 
+            this.txtBxNotes.Location = new System.Drawing.Point(302, 53);
+            this.txtBxNotes.Multiline = true;
+            this.txtBxNotes.Name = "txtBxNotes";
+            this.txtBxNotes.Size = new System.Drawing.Size(296, 127);
+            this.txtBxNotes.TabIndex = 14;
+            this.txtBxNotes.TextChanged += new System.EventHandler(this.textBox1_TextChanged_1);
+            // 
+            // btnScores
+            // 
+            this.btnScores.Location = new System.Drawing.Point(12, 381);
+            this.btnScores.Name = "btnScores";
+            this.btnScores.Size = new System.Drawing.Size(139, 23);
+            this.btnScores.TabIndex = 15;
+            this.btnScores.Text = "Subject Scores";
+            this.btnScores.UseVisualStyleBackColor = true;
+            this.btnScores.Click += new System.EventHandler(this.btnScores_Click);
+            // 
+            // calSchedule
+            // 
+            this.calSchedule.Location = new System.Drawing.Point(302, 213);
+            this.calSchedule.Name = "calSchedule";
+            this.calSchedule.TabIndex = 16;
+            this.calSchedule.DateSelected += new System.Windows.Forms.DateRangeEventHandler(this.calSchedule_DateSelected);
             // 
             // MTSS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 411);
+            this.ClientSize = new System.Drawing.Size(609, 411);
+            this.Controls.Add(this.calSchedule);
+            this.Controls.Add(this.btnScores);
+            this.Controls.Add(this.txtBxNotes);
+            this.Controls.Add(this.checkBoxReading);
+            this.Controls.Add(this.checkBoxMath);
+            this.Controls.Add(this.lblNoName);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.chkBxReading);
             this.Controls.Add(this.chkBxMath);
             this.Controls.Add(this.cbGrade);
             this.Controls.Add(this.lblGrade);
             this.Controls.Add(this.lblNotes);
-            this.Controls.Add(this.rtbNotes);
             this.Controls.Add(this.txtBxLastName);
             this.Controls.Add(this.lblLastName);
             this.Controls.Add(this.lblFirstName);
             this.Controls.Add(this.txtBxFirstName);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MTSS";
-            this.Text = "Form1";
+            this.Text = "MTSS";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -206,7 +287,6 @@
         private System.Windows.Forms.Label lblFirstName;
         private System.Windows.Forms.Label lblLastName;
         private System.Windows.Forms.TextBox txtBxLastName;
-        private System.Windows.Forms.RichTextBox rtbNotes;
         private System.Windows.Forms.Label lblNotes;
         private System.Windows.Forms.Label lblGrade;
         private System.Windows.Forms.ComboBox cbGrade;
@@ -215,6 +295,14 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsbSave;
         private System.Windows.Forms.ToolStripButton tsbOpen;
+        private System.Windows.Forms.Timer tmrNoName;
+        private System.Windows.Forms.Label lblNoName;
+        private System.Windows.Forms.CheckedListBox checkBoxMath;
+        private System.Windows.Forms.CheckedListBox checkBoxReading;
+        private System.Windows.Forms.TextBox txtBxNotes;
+        private System.Windows.Forms.Button btnScores;
+        private System.Windows.Forms.MonthCalendar calSchedule;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 
