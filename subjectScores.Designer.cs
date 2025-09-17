@@ -47,7 +47,7 @@
             this.dataMath.Size = new System.Drawing.Size(240, 219);
             this.dataMath.TabIndex = 0;
             this.dataMath.Visible = false;
-            this.dataMath.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataMath_CellContentClick);
+            this.dataMath.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataMath_CellContentClick);
             // 
             // dataReading
             // 
@@ -63,7 +63,7 @@
             this.dataReading.Size = new System.Drawing.Size(240, 219);
             this.dataReading.TabIndex = 1;
             this.dataReading.Visible = false;
-            this.dataReading.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataReading_CellContentClick);
+            this.dataReading.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataReading_CellContentClick);
             // 
             // subjectScoresForm
             // 

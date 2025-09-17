@@ -63,7 +63,9 @@ namespace MTSS
 
         private void dataMath_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            //e.RowIndex;
+            //e.ColumnIndex;
+            
         }
 
         private void dataReading_CellContentClick(object sender, DataGridViewCellEventArgs e)
